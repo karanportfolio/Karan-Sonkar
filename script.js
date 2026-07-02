@@ -173,4 +173,60 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
     });
+
+    // --- 6. Formspree Ajax Submission ---
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            const formData = new FormData(contactForm);
+            
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    // Success! Reset form and show success message
+                    contactForm.reset();
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Sent Successfully!';
+                    submitBtn.style.background = '#10b981'; // Green color for success
+                    submitBtn.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.4)';
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                        submitBtn.style.boxShadow = '';
+                    }, 4000);
+                } else {
+                    const data = await response.json();
+                    throw new Error(data.errors ? data.errors.map(err => err.message).join(', ') : 'Form submission failed');
+                }
+            } catch (error) {
+                console.error(error);
+                submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Failed to send';
+                submitBtn.style.background = '#ef4444'; // Red color for error
+                submitBtn.style.boxShadow = '0 0 15px rgba(239, 68, 68, 0.4)';
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    submitBtn.style.boxShadow = '';
+                }, 4000);
+            }
+        });
+    }
 });

@@ -290,14 +290,14 @@
                     </div>
                 </div>
                 <div class="contact-right gsap-reveal-right">
-                    <form class="glass-card contact-form">
+                    <form class="glass-card contact-form" action="https://formspree.io/f/mzdlkbye" method="POST">
                         <div class="input-row">
-                            <input type="text" placeholder="Name" required>
-                            <input type="tel" placeholder="Phone Number" required>
+                            <input type="text" name="name" placeholder="Name" required>
+                            <input type="tel" name="phone" placeholder="Phone Number" required>
                         </div>
-                        <input type="email" placeholder="Email" required>
-                        <input type="text" placeholder="Subject" required>
-                        <textarea rows="5" placeholder="Message" required></textarea>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="text" name="subject" placeholder="Subject" required>
+                        <textarea name="message" rows="5" placeholder="Message" required></textarea>
                         <button type="submit" class="btn btn-primary w-100">Send Message</button>
                     </form>
                 </div>
