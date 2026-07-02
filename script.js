@@ -20,20 +20,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- 2. Mobile Sidebar Toggle ---
     const menuToggle = document.getElementById('mobile-menu');
     const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
     const navLinks = document.querySelectorAll('.nav-menu a');
 
-    menuToggle.addEventListener('click', () => {
+    function toggleSidebar() {
         sidebar.classList.toggle('active');
+        sidebarOverlay.classList.toggle('active');
         menuToggle.innerHTML = sidebar.classList.contains('active') 
             ? '<i class="fas fa-times"></i>' 
             : '<i class="fas fa-bars"></i>';
-    });
+    }
+
+    menuToggle.addEventListener('click', toggleSidebar);
+    sidebarOverlay.addEventListener('click', toggleSidebar);
 
     // Close sidebar on link click (Mobile)
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             if (window.innerWidth <= 991) {
                 sidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
                 menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
             }
         });
@@ -61,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
-            if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+            if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
                 current = section.getAttribute('id');
             }
         });
