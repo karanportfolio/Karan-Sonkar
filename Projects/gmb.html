@@ -112,13 +112,18 @@ a { text-decoration: none; color: inherit; }
 .btn-outline:hover { background: rgba(0, 210, 255, 0.1); transform: scale(1.05); }
 
 .sticky-nav {
-    position: fixed; top: 0; left: 0; width: 100%; padding: 20px 5%;
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(20px);
+    position: fixed; top: 0; left: 0; width: 100%; padding: 16px 0;
+    background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--glass-border); z-index: 100; transition: 0.3s;
+    box-sizing: border-box;
 }
-.back-link { font-weight: 600; font-size: 1.1rem; transition: var(--transition); }
+.nav-container {
+    max-width: 1400px; margin: 0 auto; width: 100%; padding: 0 5%;
+    display: flex; justify-content: space-between; align-items: center; box-sizing: border-box;
+}
+.back-link { font-weight: 600; font-size: 1rem; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; }
 .back-link:hover { color: var(--neon-blue); transform: translateX(-5px); }
+.sticky-nav .btn { padding: 10px 24px; font-size: 0.9rem; white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; }
 
 /* =========================================
    5. HERO SECTION
@@ -234,7 +239,7 @@ a { text-decoration: none; color: inherit; }
 ========================================= */
 @media (max-width: 1024px) {
     .cs-hero, .overview-grid, .st-grid { grid-template-columns: 1fr; gap: 40px; }
-    .cs-hero { padding-top: 120px; text-align: center; }
+    .cs-hero { padding-top: 120px; text-align: center; min-height: auto; }
     .cs-meta { justify-content: center; border-left: none; border-bottom: 3px solid var(--neon-blue); padding-bottom: 20px; }
     
     .showcase-wrapper, .showcase-wrapper.reverse-layout { flex-direction: column; }
@@ -243,14 +248,56 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 768px) {
-    .cs-title { font-size: 3rem; }
+    .section-padding { padding: 60px 5%; }
+    .section-title { font-size: 2rem; }
+    .cs-title { font-size: 2.8rem; }
+    .cs-meta { flex-wrap: wrap; gap: 20px; }
     .meta-item { text-align: center; }
-    .cs-hero-image .img-wrapper { height: 400px; }
-    .sticky-nav { padding: 15px 5%; }
+    .cs-hero-image .img-wrapper { height: 350px; }
+    .sticky-nav { padding: 12px 0; }
+    .nav-container { padding: 0 5%; }
+    .back-link { font-size: 0.9rem; }
+    .sticky-nav .btn { padding: 8px 18px; font-size: 0.85rem; }
+    .showcase-wrapper { padding: 30px 20px; }
+    .showcase-gallery { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sg-item { height: 180px; }
+    .sg-item span { opacity: 1; transform: translateY(0); }
     .next-project-link { flex-direction: column; text-align: center; gap: 20px; padding: 30px; }
     .next-project-link h2 { font-size: 2rem; }
-    
-    .showcase-gallery { grid-template-columns: 1fr; }
+    .cursor-glow, .cursor-dot { display: none !important; }
+}
+
+@media (max-width: 480px) {
+    .section-padding { padding: 50px 4%; }
+    .sticky-nav { padding: 10px 0; }
+    .nav-container { padding: 0 4%; }
+    .back-link { font-size: 0.82rem; gap: 5px; }
+    .sticky-nav .btn { padding: 6px 14px; font-size: 0.78rem; border-radius: 30px; }
+    .cs-hero { padding-top: 100px; gap: 30px; }
+    .cs-title { font-size: 2.1rem; line-height: 1.2; margin-bottom: 20px; }
+    .cs-meta { flex-direction: column; gap: 12px; padding-left: 0; }
+    .cs-hero-image .img-wrapper { height: 250px; }
+    .overview-goal { padding: 25px 15px; }
+    .objective-list li { font-size: 0.95rem; }
+    .showcase-wrapper { padding: 20px 15px; border-radius: 12px; }
+    .showcase-content h3 { font-size: 1.5rem; }
+    .work-pills { gap: 6px; }
+    .work-pills span { padding: 5px 10px; font-size: 0.8rem; }
+    .showcase-gallery { grid-template-columns: 1fr; gap: 10px; }
+    .sg-item { height: 160px; }
+    .resp-grid { grid-template-columns: 1fr; gap: 12px; }
+    .resp-card { padding: 15px; font-size: 0.95rem; }
+    .challenges-banner { padding: 20px 15px; }
+    .timeline { padding-left: 20px; }
+    .timeline-item .dot { left: -27px; }
+    .tools-grid { gap: 10px; }
+    .tool-badge { flex: 1 1 100%; padding: 12px 15px; font-size: 0.9rem; }
+    .results-grid { grid-template-columns: 1fr; gap: 15px; }
+    .result-card { padding: 25px 15px; }
+    .conclusion-text { font-size: 1rem; line-height: 1.6; }
+    .next-project-link { padding: 20px 15px; }
+    .next-project-link h2 { font-size: 1.5rem; }
+    .next-project-link i { font-size: 2rem; }
 }
 </style>
 <body class="case-study-page">
@@ -267,8 +314,10 @@ a { text-decoration: none; color: inherit; }
 
     <!-- Sticky Navigation -->
     <nav class="sticky-nav gsap-nav">
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
-        <a href="#results" class="btn btn-outline">View Outcomes</a>
+        <div class="nav-container">
+            <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <a href="#results" class="btn btn-outline">View Outcomes</a>
+        </div>
     </nav>
 
     <!-- HERO SECTION -->
@@ -498,6 +547,16 @@ a { text-decoration: none; color: inherit; }
             <h2 class="section-title">Conclusion</h2>
             <p class="conclusion-text">By treating Google Business Profiles as critical digital real estate, I successfully established high-quality, fully optimized presences for diverse businesses. Whether guiding a school through verification or mapping delivery zones for a cloud kitchen, a solid Local SEO foundation ensures these businesses are exactly where their customers are looking.</p>
         </div>
+
+        <div class="next-project gsap-reveal mt-5">
+            <a href="nissim.html" class="glass-card next-project-link">
+                <div class="np-content">
+                    <span class="section-tag">Next Project</span>
+                    <h2>Nissim India Marketing</h2>
+                </div>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
     </section>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -566,11 +625,11 @@ a { text-decoration: none; color: inherit; }
         if (window.scrollY > 50) {
             nav.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.5)';
             nav.style.background = 'rgba(2, 6, 23, 0.95)';
-            nav.style.padding = '15px 5%';
+            nav.style.padding = '12px 0';
         } else {
             nav.style.boxShadow = 'none';
             nav.style.background = 'rgba(2, 6, 23, 0.8)';
-            nav.style.padding = '20px 5%';
+            nav.style.padding = '18px 0';
         }
     });
 });
